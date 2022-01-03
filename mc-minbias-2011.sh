@@ -1,43 +1,42 @@
 #!/bin/sh -x
 #
-# Simulate MinBias 7TeV for 2011 using CNS Opendata
+# Simulate MinBias 7TeV for 2011 using CNS Opendata using cmsconnect
 # http://opendata.cern.ch/record/36
 # (yilun.wu@Vanderbilt.Edu)
 #
 # Dietrich.Liko@oeaw.ac.at
 
-EVENTS=${1:-10}
+EVENTS=$1
+CONDOR_JOB_ID=$2
+CONDOR_PROC_ID=$3
+
+tar xzvf start53_lv6a1.tgz
+
+find .
+
+
 
 # Patch for conditions database
 
 patch_global_tag() {
     sed -f - -i "$1" <<SED_SCRIPT
-/^process.GlobalTag = /a process.GlobalTag.connect = cms.string('sqlite_file:/groups/hephy/cms/dietrich.liko/conddb/START53_LV6A1.db')
+/^process.GlobalTag = /a process.GlobalTag.connect = cms.string('sqlite_file:${PWD}/START53_LV6A1.db')
 /^process.GlobalTag = /a process.GlobalTag.globaltag = 'START53_LV6A1::All'
 /^process.GlobalTag = /d
 SED_SCRIPT
 }
 
-# patch_global_tag() {
-#     sed -f - -i "$1" <<SED_SCRIPT
-# /^process.GlobalTag = /a process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1.db')
-# /^process.GlobalTag = /a process.GlobalTag.globaltag = 'START53_LV6A1::All'
-# /^process.GlobalTag = /d
-# SED_SCRIPT
-# }
+source /opt/cms/cmsset_default.sh
+scramv1 project CMSSW ${CMSSW_VERSION}
+cd ${CMSSW_VERSION}/src
+eval `scramv1 runtime -sh`
 
 mkdir -p Configuration/GenProduction/python/
-mv ../../Configuration/GenProduction/python/MinBias_TuneZ2_7TeV_pythia6_cff.py Configuration/GenProduction/python/MinBias_TuneZ2_7TeV_pythia6_cff.py
-find . 
+mv ../../MinBias_TuneZ2_7TeV_pythia6_cff.py Configuration/GenProduction/python/MinBias_TuneZ2_7TeV_pythia6_cff.py
 
 scram b
 
 cd ../..
-
-# ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1 START53_LV6A1
-# ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1.db START53_LV6A1.db
-ln -sf /groups/hephy/cms/dietrich.liko/conddb/START53_LV6A1 START53_LV6A1
-ln -sf /groups/hephy/cms/dietrich.liko/conddb/START53_LV6A1.db START53_LV6A1.db
 
 # GEN-SIM
 
@@ -94,4 +93,9 @@ patch_global_tag MinBias-Summer11-RECO.py
 
 cmsRun MinBias-Summer11-RECO.py
 
+#xrdcp -np -adler MinBias-Summer11-RECO.root \
+#	root://eos.grid.vbc.ac.at//eos/vbc/experiments/cms/store/user/liko/mc-minbias-2011/MinBias-Summer11-RECO-${CONDOR_JOB_ID}-${CONDOR_PROC_ID}.root
+
+xrdcp -np -adler MinBias-Summer11-RECO.root \
+	root://eosuser.cern.ch//eos/user/l/liko/mc-minbias-2011/MinBias-Summer11-RECO-${CONDOR_JOB_ID}-${CONDOR_PROC_ID}.root
 
