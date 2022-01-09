@@ -18,9 +18,4 @@ curl  -s https://raw.githubusercontent.com/cms-sw/genproductions/V01-00-46/pytho
 # ensure CVMFS ...
 
 
-for path in /cvmfs/unpacked.cern.ch /cvmfs/cms-opendata-conddb.cern.ch
-do
-    ls $path
-done
-
 singularity run -e "$SIF" "$SCRIPT" "$@" 
