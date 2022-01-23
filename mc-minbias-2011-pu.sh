@@ -65,7 +65,7 @@ cmsDriver.py step1 \
 	--datatier GEN-RAW \
 	--conditions=START53_LV6A1::All \
 	--eventcontent RAWSIM \
-	--pileup_input root://eos.grid.vbc.ac.at//eos/vbc/experiments/cms/store/user//liko/mc-minbias-2011/MinBias-Summer11-RECO-11288508-9.root \
+	--pileup_input root://eospublic.cern.ch//eos/opendata/cms/MonteCarlo2011/Summer11LegDR/MinBias_TuneZ2_7TeV-pythia6/GEN-SIM/START53_LV4-v1/10000/00064CCC-A218-E311-A2E9-D485646A4E1A.root \
         --pileup 2011_FinalDist_OOTPU \
 	--python_filename MinBias-Summer11-HLT.py \
 	--no_exec \
@@ -95,9 +95,9 @@ patch_global_tag MinBias-Summer11-RECO.py
 
 cmsRun MinBias-Summer11-RECO.py
 
-xrdcp -np -adler MinBias-Summer11-RECO.root \
-    root://eos.grid.vbc.ac.at//eos/vbc/experiments/cms/store/user/liko/mc-minbias-2011-pu/MinBias-Summer11-RECO-${CONDOR_JOB_ID}-${CONDOR_PROC_ID}.root
+#xrdcp -np -adler MinBias-Summer11-RECO.root \
+#    root://eos.grid.vbc.ac.at//eos/vbc/experiments/cms/store/user/liko/mc-minbias-2011-pu/MinBias-Summer11-RECO-${CONDOR_JOB_ID}-${CONDOR_PROC_ID}.root
 
-# xrdcp -np -adler MinBias-Summer11-RECO.root \
-#	root://eosuser.cern.ch//eos/user/l/liko/mc-minbias-2011i-pu/MinBias-Summer11-RECO-${CONDOR_JOB_ID}-${CONDOR_PROC_ID}.root
+xrdcp -np -adler MinBias-Summer11-RECO.root \
+    root://eosuser.cern.ch//eos/user/l/liko/mc-minbias-2011i-pu/MinBias-Summer11-RECO-${CONDOR_JOB_ID}-${CONDOR_PROC_ID}.root
 

@@ -50,7 +50,7 @@ cmsDriver.py Configuration/GenProduction/python/MinBias_TuneZ2_7TeV_pythia6_cff.
 	--step GEN,SIM \
 	--python_filename MinBias-Summer11-GENSIM.py \
 	--no_exec \
-    --fileout MinBias-Summer11-GENSIM.root \
+        --fileout MinBias-Summer11-GENSIM.root \
 	--number "$EVENTS"
 
 patch_global_tag MinBias-Summer11-GENSIM.py
@@ -95,6 +95,9 @@ cmsRun MinBias-Summer11-RECO.py
 
 #xrdcp -np -adler MinBias-Summer11-RECO.root \
 #	root://eos.grid.vbc.ac.at//eos/vbc/experiments/cms/store/user/liko/mc-minbias-2011/MinBias-Summer11-RECO-${CONDOR_JOB_ID}-${CONDOR_PROC_ID}.root
+
+xrdcp -np -adler MinBias-Summer11-GENSIM.root \
+	root://eosuser.cern.ch//eos/user/l/liko/mc-minbias-2011/MinBias-Summer11-GENSIM-${CONDOR_JOB_ID}-${CONDOR_PROC_ID}.root
 
 xrdcp -np -adler MinBias-Summer11-RECO.root \
 	root://eosuser.cern.ch//eos/user/l/liko/mc-minbias-2011/MinBias-Summer11-RECO-${CONDOR_JOB_ID}-${CONDOR_PROC_ID}.root

@@ -8,4 +8,4 @@ Output = log/mc-minbias-2011_$(Cluster)-$(Process).out
 Log = log/mc-minbias-2011_$(Cluster).log
 +DESIRED_Sites = "T2_AT_Vienna"
 +SingularityImage = "/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmsopendata/cmssw_5_3_32:latest"
-Queue 100
+Queue 10
