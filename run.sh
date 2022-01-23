@@ -15,7 +15,5 @@ curl  -s https://raw.githubusercontent.com/cms-sw/genproductions/V01-00-46/pytho
       --retry 2 --create-dirs -o  Configuration/GenProduction/python/MinBias_TuneZ2_7TeV_pythia6_cff.py  
 [ -s Configuration/GenProduction/python/MinBias_TuneZ2_7TeV_pythia6_cff.py ] || exit $?
 
-# ensure CVMFS ...
 
-
-singularity run -e "$SIF" "$SCRIPT" "$@" 
+singularity run "$SIF" "$SCRIPT" "$@" 
